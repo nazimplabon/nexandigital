@@ -1,0 +1,73 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Portfolio & Blog | NexaNDigital{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="page-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="{% url 'website:home' %}">Home</a> &gt; Portfolio</p>
+    <h1>Our Portfolio</h1>
+  </div>
+</section>
+
+<!-- Portfolio Grid -->
+<section class="portfolio-section">
+  <div class="container">
+    <h2 class="section-title center">Recent Work</h2>
+    <div class="portfolio-grid">
+      {% for item in items %}
+      <div class="portfolio-card">
+        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+        <div class="portfolio-card-body">
+          {% if item.service %}<span class="tag">{{ item.service.title }}</span>{% endif %}
+          <h4>{{ item.title }}</h4>
+          <p>{{ item.summary|truncatewords:15 }}</p>
+          {% if item.project_url %}
+          <a href="{{ item.project_url }}" target="_blank" class="explore-link">View Project →</a>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <p>No portfolio items yet — add them in the admin panel.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Blog -->
+<section class="blog-section">
+  <div class="container">
+    <h2 class="section-title center">Our Blog</h2>
+    <div class="blog-grid">
+      {% for post in posts %}
+      <div class="blog-card">
+        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+        <div class="blog-card-body">
+          <span class="tag">{{ post.published_at|date:"M d, Y" }} {% if post.category %}&middot; {{ post.category }}{% endif %}</span>
+          <h4>{{ post.title }}</h4>
+          <p>{{ post.excerpt|truncatewords:18 }}</p>
+          <a href="{% url 'website:blog_detail' post.slug %}" class="explore-link">Read More →</a>
+        </div>
+      </div>
+      {% empty %}
+      <p>No blog posts yet — add them in the admin panel.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="container cta-flex">
+    <div>
+      <h3>Have a Project in Mind?</h3>
+      <p>Let's build something great together.</p>
+    </div>
+    <a href="{% url 'website:contact' %}" class="btn btn-primary">Get a Free Quote →</a>
+  </div>
+</section>
+
+{% endblock %}

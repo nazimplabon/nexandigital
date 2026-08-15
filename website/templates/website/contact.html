@@ -1,0 +1,77 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us | NexaNDigital{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="page-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="{% url 'website:home' %}">Home</a> &gt; Contact</p>
+    <h1>Contact Us</h1>
+  </div>
+</section>
+
+<!-- Contact Content -->
+<section class="contact-section">
+  <div class="container contact-flex">
+
+    <div class="contact-info">
+      <h2>Get In Touch</h2>
+      <p>Have a project in mind? Let's discuss how we can help your business grow.</p>
+
+      <div class="contact-item">
+        <i class="bi bi-envelope"></i>
+        <div>
+          <h5>Email</h5>
+          <p>hello@nexandigital.com</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <i class="bi bi-telephone"></i>
+        <div>
+          <h5>Phone</h5>
+          <p>+880 1234-567890</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <i class="bi bi-geo-alt"></i>
+        <div>
+          <h5>Location</h5>
+          <p>Dhaka, Bangladesh</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <i class="bi bi-clock"></i>
+        <div>
+          <h5>Working Hours</h5>
+          <p>Monday - Friday: 9AM - 6PM</p>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form" method="POST" action="{% url 'website:contact' %}">
+      {% csrf_token %}
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="subject" placeholder="Subject">
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn btn-primary">Send Message →</button>
+    </form>
+
+  </div>
+</section>
+
+<!-- Map -->
+<section class="map-section">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114727.5!2d90.35!3d23.78!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1"
+    width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
+  </iframe>
+</section>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}{{ service.title }} | NexaNDigital{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="service-hero">
+  <div class="container hero-flex">
+    <div class="hero-text">
+      <p class="breadcrumb"><a href="{% url 'website:home' %}">Home</a> &gt;
+        <a href="{% url 'website:services' %}">Services</a> &gt; {{ service.title }}</p>
+      <h1>{{ service.title }}</h1>
+      <p class="hero-desc">{{ service.short_description }}</p>
+    </div>
+    {% if service.hero_image %}
+    <div class="hero-image">
+      <img src="{{ service.hero_image.url }}" alt="{{ service.title }}">
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- What We Offer -->
+<section class="offer-section">
+  <div class="container">
+    <h2 class="section-title center">What We Offer</h2>
+    <div class="offer-grid">
+      {% for feature in service.features.all %}
+      <div class="offer-card">
+        <div class="offer-icon"><i class="{{ feature.icon }}"></i></div>
+        <div>
+          <h4>{{ feature.title }}</h4>
+          <p>{{ feature.description }}</p>
+        </div>
+      </div>
+      {% empty %}
+      <p>No features added yet — add them in the admin panel.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Technologies We Use -->
+{% if service.technologies.all %}
+<section class="tech-section">
+  <div class="container">
+    <h3 class="section-title center">Technologies We Use</h3>
+    <div class="tech-row">
+      {% for tech in service.technologies.all %}
+      <div class="tech-item">
+        {% if tech.icon %}<i class="{{ tech.icon }}"></i>{% endif %}
+        <span>{{ tech.name }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="container cta-flex">
+    <div>
+      <h3>Have a Project in Mind?</h3>
+      <p>Let's build something amazing together.</p>
+    </div>
+    <a href="{% url 'website:contact' %}" class="btn btn-primary">Get a Free Quote →</a>
+  </div>
+</section>
+
+{% endblock %}

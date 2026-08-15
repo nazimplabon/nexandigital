@@ -1,0 +1,72 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Our Services | NexaNDigital{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="page-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="{% url 'website:home' %}">Home</a> &gt; Services</p>
+    <h1>Our Services</h1>
+    <p class="hero-desc center">We provide end-to-end digital solutions to help businesses
+      streamline, grow and succeed in the digital world.</p>
+  </div>
+</section>
+
+<!-- What We Offer -->
+<section class="core-services">
+  <div class="container">
+    <p class="eyebrow center">WHAT WE OFFER</p>
+    <h2 class="section-title center">Complete Digital Solutions</h2>
+    <p class="section-sub center">
+      From building powerful websites and software to analyzing data, automating
+      processes, marketing your brand, and designing stunning visuals — we do it all to help your business grow.
+    </p>
+
+    <div class="core-services-grid">
+      {% for service in services %}
+      <div class="core-service-card">
+        <div class="offer-icon"><i class="{{ service.icon }}"></i></div>
+        <h4>{{ service.title }}</h4>
+        <p>{{ service.short_description|truncatewords:16 }}</p>
+        <a href="{% url 'website:service_detail' service.slug %}" class="explore-link">Explore Service →</a>
+      </div>
+      {% empty %}
+      <p>No services added yet — add them in the admin panel.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="container cta-flex">
+    <div>
+      <h3>Need a Custom Solution?</h3>
+      <p>Let's discuss your project and create the perfect solution for your business.</p>
+    </div>
+    <a href="{% url 'website:contact' %}" class="btn btn-primary">Get a Free Quote →</a>
+  </div>
+</section>
+
+<!-- Why Choose stats -->
+{% if stats %}
+<section class="stats-strip">
+  <div class="container">
+    <p class="eyebrow center">WHY CHOOSE NEXANDIGITAL?</p>
+    <h2 class="section-title center">We're More Than Just a Service Provider</h2>
+    <div class="stats-grid">
+      {% for stat in stats %}
+      <div class="stat-item">
+        <div class="stat-value">{{ stat.value }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}
