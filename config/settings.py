@@ -26,11 +26,12 @@ SECRET_KEY = 'django-insecure-5)nm=lm7_-hc7%nuep6v0tebf@k)o$&ct)ao%jor0)_qd9a&xy
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    "nextndigital.com",
+    "www.nextndigital.com",
     "nexandigital.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
-
 
 # Application definition
 
