@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website',
+    'dashboard'
 ]
+
+LOGIN_URL = '/dashboard/login/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

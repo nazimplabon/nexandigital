@@ -1,0 +1,48 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Quote Requests | NexaNDigital Admin{% endblock %}
+
+{% block content %}
+
+<div class="dash-greeting">
+  <h2>Quote Requests</h2>
+  <p>Manage incoming leads from your contact form.</p>
+</div>
+
+<form method="GET" class="dash-filters">
+  <input type="text" name="search" placeholder="Search by name..." value="{{ request.GET.search }}">
+  <select name="status" onchange="this.form.submit()">
+    <option value="">All Status</option>
+    <option value="new" {% if request.GET.status == 'new' %}selected{% endif %}>New</option>
+    <option value="read" {% if request.GET.status == 'read' %}selected{% endif %}>Reviewed</option>
+  </select>
+</form>
+
+<div class="dash-panel">
+  <table class="dash-table">
+    <thead>
+      <tr><th>Name</th><th>Email</th><th>Subject</th><th>Date</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      {% for quote in quotes %}
+      <tr onclick="window.location.href='{% url 'dashboard:quote_detail' quote.pk %}'" style="cursor:pointer;">
+        <td>{{ quote.name }}</td>
+        <td>{{ quote.email }}</td>
+        <td>{{ quote.subject|default:"—" }}</td>
+        <td>{{ quote.created_at|date:"M d, Y" }}</td>
+        <td>
+          {% if quote.is_read %}
+            <span class="status-badge status-read">Reviewed</span>
+          {% else %}
+            <span class="status-badge status-new">New</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No quote requests found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

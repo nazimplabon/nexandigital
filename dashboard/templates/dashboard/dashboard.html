@@ -1,0 +1,73 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Dashboard | NexaNDigital Admin{% endblock %}
+
+{% block content %}
+
+<div class="dash-greeting">
+  <h2>Good day, {{ request.user.username }} 👋</h2>
+  <p>Here's what's happening on your website.</p>
+</div>
+
+<div class="dash-stats-grid">
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon"><i class="bi bi-grid"></i></div>
+    <div>
+      <div class="dash-stat-value">{{ service_count }}</div>
+      <div class="dash-stat-label">Services</div>
+    </div>
+  </div>
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon"><i class="bi bi-briefcase"></i></div>
+    <div>
+      <div class="dash-stat-value">{{ portfolio_count }}</div>
+      <div class="dash-stat-label">Portfolio Projects</div>
+    </div>
+  </div>
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon"><i class="bi bi-envelope-paper"></i></div>
+    <div>
+      <div class="dash-stat-value">{{ new_quotes_count }}</div>
+      <div class="dash-stat-label">New Quote Requests</div>
+    </div>
+  </div>
+</div>
+
+<div class="dash-panel">
+  <h3>Recent Quote Requests</h3>
+  <table class="dash-table">
+    <thead>
+      <tr><th>Name</th><th>Subject</th><th>Date</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      {% for quote in recent_quotes %}
+      <tr onclick="window.location.href='{% url 'dashboard:quote_detail' quote.pk %}'" style="cursor:pointer;">
+        <td>{{ quote.name }}</td>
+        <td>{{ quote.subject|default:"—" }}</td>
+        <td>{{ quote.created_at|date:"M d" }}</td>
+        <td>
+          {% if quote.is_read %}
+            <span class="status-badge status-read">Reviewed</span>
+          {% else %}
+            <span class="status-badge status-new">New</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">No quote requests yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="dash-panel">
+  <h3>Quick Actions</h3>
+  <div class="dash-quick-actions">
+    <a href="/admin/website/service/add/" class="btn btn-primary"><i class="bi bi-plus"></i> Add Service</a>
+    <a href="/admin/website/portfolioitem/add/" class="btn btn-secondary"><i class="bi bi-plus"></i> Add Portfolio</a>
+    <a href="{% url 'dashboard:quotes' %}" class="btn btn-secondary"><i class="bi bi-envelope"></i> View All Quotes</a>
+    <a href="/admin/website/blogpost/add/" class="btn btn-secondary"><i class="bi bi-plus"></i> Write Blog</a>
+  </div>
+</div>
+
+{% endblock %}

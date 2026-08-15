@@ -1,0 +1,48 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Pricing Plans | NexaNDigital Admin{% endblock %}
+
+{% block content %}
+
+<div class="dash-greeting">
+  <h2>Pricing Plans</h2>
+  <p>Manage the pricing tiers shown on your homepage.</p>
+</div>
+
+<div class="dash-filters">
+  <div style="flex:1;"></div>
+  <a href="/admin/website/pricingplan/add/" class="btn btn-primary"><i class="bi bi-plus"></i> Add Plan</a>
+</div>
+
+<div class="dash-panel">
+  <table class="dash-table">
+    <thead>
+      <tr><th>Name</th><th>Price</th><th>Popular</th><th>Features</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for plan in plans %}
+      <tr>
+        <td>{{ plan.name }}</td>
+        <td>${{ plan.price }}{{ plan.period }}</td>
+        <td>
+          {% if plan.is_popular %}
+            <span class="status-badge status-read">Yes</span>
+          {% else %}
+            —
+          {% endif %}
+        </td>
+        <td>{{ plan.features.count }} features</td>
+        <td>
+          <a href="/admin/website/pricingplan/{{ plan.id }}/change/" class="btn btn-secondary">
+            <i class="bi bi-pencil"></i> Edit
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No pricing plans added yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

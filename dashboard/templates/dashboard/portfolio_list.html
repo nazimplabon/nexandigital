@@ -1,0 +1,42 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Portfolio | NexaNDigital Admin{% endblock %}
+
+{% block content %}
+
+<div class="dash-greeting">
+  <h2>Portfolio</h2>
+  <p>Manage projects shown in your portfolio.</p>
+</div>
+
+<form method="GET" class="dash-filters">
+  <input type="text" name="search" placeholder="Search portfolio..." value="{{ request.GET.search }}">
+  <a href="/admin/website/portfolioitem/add/" class="btn btn-primary"><i class="bi bi-plus"></i> Add Project</a>
+</form>
+
+<div class="dash-panel">
+  <table class="dash-table">
+    <thead>
+      <tr><th>Image</th><th>Title</th><th>Service</th><th>Client</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td><img src="{{ item.image.url }}" alt="{{ item.title }}" style="width:48px; height:36px; object-fit:cover; border-radius:6px;"></td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.service.title|default:"—" }}</td>
+        <td>{{ item.client|default:"—" }}</td>
+        <td>
+          <a href="/admin/website/portfolioitem/{{ item.id }}/change/" class="btn btn-secondary">
+            <i class="bi bi-pencil"></i> Edit
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">No portfolio items added yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

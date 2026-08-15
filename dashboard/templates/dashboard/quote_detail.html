@@ -1,0 +1,67 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Quote from {{ quote.name }} | NexaNDigital Admin{% endblock %}
+
+{% block content %}
+
+<div class="dash-greeting">
+  <h2>Quote Request</h2>
+</div>
+
+<div class="dash-panel" style="max-width: 600px;">
+  <div class="dash-detail-row">
+    <i class="bi bi-person"></i>
+    <span class="dash-detail-label">Name</span>
+    <span>{{ quote.name }}</span>
+  </div>
+  <div class="dash-detail-row">
+    <i class="bi bi-envelope"></i>
+    <span class="dash-detail-label">Email</span>
+    <span>{{ quote.email }}</span>
+  </div>
+  <div class="dash-detail-row">
+    <i class="bi bi-tag"></i>
+    <span class="dash-detail-label">Subject</span>
+    <span>{{ quote.subject|default:"—" }}</span>
+  </div>
+  <div class="dash-detail-row" style="align-items: flex-start;">
+    <i class="bi bi-chat-left-text"></i>
+    <span class="dash-detail-label">Message</span>
+    <span>{{ quote.message }}</span>
+  </div>
+  <div class="dash-detail-row">
+    <i class="bi bi-clock"></i>
+    <span class="dash-detail-label">Received</span>
+    <span>{{ quote.created_at|date:"F d, Y — g:i A" }}</span>
+  </div>
+  <div class="dash-detail-row">
+    <i class="bi bi-circle-fill"></i>
+    <span class="dash-detail-label">Status</span>
+    <span>
+      {% if quote.is_read %}
+        <span class="status-badge status-read">Reviewed</span>
+      {% else %}
+        <span class="status-badge status-new">New</span>
+      {% endif %}
+    </span>
+  </div>
+
+  <div class="dash-actions">
+    {% if not quote.is_read %}
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" name="mark_reviewed" class="btn btn-primary">
+        <i class="bi bi-check2"></i> Mark Reviewed
+      </button>
+    </form>
+    {% endif %}
+    <form method="POST" onsubmit="return confirm('Delete this quote request?');">
+      {% csrf_token %}
+      <button type="submit" name="delete" class="btn btn-danger">
+        <i class="bi bi-trash"></i> Delete
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Services | NexaNDigital Admin{% endblock %}
+
+{% block content %}
+
+<div class="dash-greeting">
+  <h2>Services</h2>
+  <p>Manage services displayed on your website.</p>
+</div>
+
+<form method="GET" class="dash-filters">
+  <input type="text" name="search" placeholder="Search services..." value="{{ request.GET.search }}">
+  <a href="/admin/website/service/add/" class="btn btn-primary"><i class="bi bi-plus"></i> Add Service</a>
+</form>
+
+<div class="dash-panel">
+  <table class="dash-table">
+    <thead>
+      <tr><th>Icon</th><th>Title</th><th>Description</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for service in services %}
+      <tr>
+        <td><i class="{{ service.icon }}" style="font-size:1.2rem; color:var(--dash-blue);"></i></td>
+        <td>{{ service.title }}</td>
+        <td>{{ service.short_description|truncatewords:10 }}</td>
+        <td>
+          <a href="/admin/website/service/{{ service.id }}/change/" class="btn btn-secondary">
+            <i class="bi bi-pencil"></i> Edit
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">No services added yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

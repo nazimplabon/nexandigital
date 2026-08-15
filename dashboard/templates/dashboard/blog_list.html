@@ -1,0 +1,49 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Blog Posts | NexaNDigital Admin{% endblock %}
+
+{% block content %}
+
+<div class="dash-greeting">
+  <h2>Blog Posts</h2>
+  <p>Manage articles published on your blog.</p>
+</div>
+
+<form method="GET" class="dash-filters">
+  <input type="text" name="search" placeholder="Search posts..." value="{{ request.GET.search }}">
+  <a href="/admin/website/blogpost/add/" class="btn btn-primary"><i class="bi bi-plus"></i> Write Post</a>
+</form>
+
+<div class="dash-panel">
+  <table class="dash-table">
+    <thead>
+      <tr><th>Cover</th><th>Title</th><th>Category</th><th>Published</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td><img src="{{ post.cover_image.url }}" alt="{{ post.title }}" style="width:48px; height:36px; object-fit:cover; border-radius:6px;"></td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.category|default:"—" }}</td>
+        <td>{{ post.published_at|date:"M d, Y" }}</td>
+        <td>
+          {% if post.is_published %}
+            <span class="status-badge status-read">Published</span>
+          {% else %}
+            <span class="status-badge status-new">Draft</span>
+          {% endif %}
+        </td>
+        <td>
+          <a href="/admin/website/blogpost/{{ post.id }}/change/" class="btn btn-secondary">
+            <i class="bi bi-pencil"></i> Edit
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="6">No blog posts added yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

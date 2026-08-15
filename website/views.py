@@ -1,24 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .models import Service, PortfolioItem, BlogPost, Testimonial, SiteStat, ContactMessage
+from .models import (
+    Service, PortfolioItem, BlogPost, Testimonial, SiteStat,
+    ContactMessage, ClientLogo, ProcessStep, PricingPlan
+)
 
 def home(request):
     context = {
         'services': Service.objects.all(),
         'stats': SiteStat.objects.all(),
         'testimonials': Testimonial.objects.all(),
-    }
-    return render(request, 'website/home.html', context)
-
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from .models import Service, PortfolioItem, BlogPost, Testimonial, SiteStat, ContactMessage
-
-def home(request):
-    context = {
-        'services': Service.objects.all(),
-        'stats': SiteStat.objects.all(),
-        'testimonials': Testimonial.objects.all(),
+        'clients': ClientLogo.objects.all(),
+        'process_steps': ProcessStep.objects.all(),
+        'pricing_plans': PricingPlan.objects.all(),
+        'portfolio_items': PortfolioItem.objects.all()[:6],
+        'blog_posts': BlogPost.objects.filter(is_published=True)[:3],
     }
     return render(request, 'website/home.html', context)
 
@@ -27,7 +23,6 @@ def services(request):
         'services': Service.objects.all(),
         'stats': SiteStat.objects.all(),
     })
-
 
 def service_detail(request, slug):
     service = get_object_or_404(Service, slug=slug)
@@ -58,4 +53,3 @@ def contact(request):
         messages.success(request, "Thanks! We'll get back to you soon.")
         return redirect('website:contact')
     return render(request, 'website/contact.html')
-

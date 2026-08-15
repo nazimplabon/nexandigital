@@ -1,0 +1,41 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Client Logos | NexaNDigital Admin{% endblock %}
+
+{% block content %}
+
+<div class="dash-greeting">
+  <h2>Client Logos</h2>
+  <p>Manage the "Trusted by" logo strip shown on your homepage.</p>
+</div>
+
+<div class="dash-filters">
+  <div style="flex:1;"></div>
+  <a href="/admin/website/clientlogo/add/" class="btn btn-primary"><i class="bi bi-plus"></i> Add Logo</a>
+</div>
+
+<div class="dash-panel">
+  <table class="dash-table">
+    <thead>
+      <tr><th>Logo</th><th>Name</th><th>Order</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for client in clients %}
+      <tr>
+        <td><img src="{{ client.logo.url }}" alt="{{ client.name }}" style="height:24px; width:auto;"></td>
+        <td>{{ client.name }}</td>
+        <td>{{ client.order }}</td>
+        <td>
+          <a href="/admin/website/clientlogo/{{ client.id }}/change/" class="btn btn-secondary">
+            <i class="bi bi-pencil"></i> Edit
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">No client logos added yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

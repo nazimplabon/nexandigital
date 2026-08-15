@@ -1,8 +1,8 @@
 from django.contrib import admin
-
 from .models import (
     Service, ServiceFeature, Technology, PortfolioItem,
-    BlogPost, Testimonial, SiteStat, ContactMessage
+    BlogPost, Testimonial, SiteStat, ContactMessage,
+    ClientLogo, ProcessStep, PricingPlan, PricingFeature
 )
 
 class ServiceFeatureInline(admin.TabularInline):
@@ -44,3 +44,20 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'subject', 'created_at', 'is_read')
     list_filter = ('is_read',)
     readonly_fields = ('created_at',)
+
+@admin.register(ClientLogo)
+class ClientLogoAdmin(admin.ModelAdmin):
+    list_display = ('name', 'order')
+
+@admin.register(ProcessStep)
+class ProcessStepAdmin(admin.ModelAdmin):
+    list_display = ('step_number', 'title', 'order')
+
+class PricingFeatureInline(admin.TabularInline):
+    model = PricingFeature
+    extra = 1
+
+@admin.register(PricingPlan)
+class PricingPlanAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'is_popular', 'order')
+    inlines = [PricingFeatureInline]
