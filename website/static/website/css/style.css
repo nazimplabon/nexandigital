@@ -404,7 +404,7 @@ ul { list-style: none; }
 }
 
 .service-hero .hero-flex { align-items: center; }
-.service-hero h1 { font-size: 2.3rem; font-weight: 800; margin: 10px 0 14px; }
+.service-hero h1 { font-size: 2.3rem; font-weight: 800; color: var(--white); margin: 10px 0 14px; }
 .service-hero .hero-desc { color: var(--text-light); }
 .service-hero .breadcrumb a:hover { color: var(--white); }
 

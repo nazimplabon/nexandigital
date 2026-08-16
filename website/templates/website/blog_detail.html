@@ -1,9 +1,5 @@
-{% extends 'website/base.html' %}
-{% load static %}
-
-{% block title %}{{ post.title }} | NexaNDigital Blog{% endblock %}
-
-{% block content %}
+{% extends 'website/base.html' %} {% load static %} {% block title %}{{
+post.title }} | NexaNDigital Blog{% endblock %} {% block content %}
 
 <!-- Hero -->
 <section class="page-hero">
@@ -14,7 +10,8 @@
     </p>
     <h1>{{ post.title }}</h1>
     <p class="hero-desc center">
-      {{ post.published_at|date:"M d, Y" }}{% if post.category %} &middot; {{ post.category }}{% endif %}
+      {{ post.published_at|date:"M d, Y" }}{% if post.category %} &middot; {{
+      post.category }}{% endif %}
     </p>
   </div>
 </section>
@@ -22,23 +19,27 @@
 <!-- Post Content -->
 <section class="blog-detail-section">
   <div class="container blog-detail-flex">
-
     <article class="blog-detail-main">
-      <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="blog-detail-cover">
-      <div class="blog-detail-content">
-        {{ post.content|linebreaks }}
-      </div>
+      <img
+        src="{{ post.cover_image.url }}"
+        alt="{{ post.title }}"
+        class="blog-detail-cover"
+      />
+      <div class="blog-detail-content">{{ post.content|linebreaks }}</div>
     </article>
 
     <aside class="blog-sidebar">
       <div class="sidebar-box">
         <h4>Recent Posts</h4>
         {% for recent in recent_posts %}
-        <a href="{% url 'website:blog_detail' recent.slug %}" class="sidebar-post-link">{{ recent.title }}</a>
+        <a
+          href="{% url 'website:blog_detail' recent.slug %}"
+          class="sidebar-post-link"
+          >{{ recent.title }}</a
+        >
         {% endfor %}
       </div>
     </aside>
-
   </div>
 </section>
 
@@ -49,7 +50,9 @@
       <h3>Have a Project in Mind?</h3>
       <p>Let's build something great together.</p>
     </div>
-    <a href="{% url 'website:contact' %}" class="btn btn-primary">Get a Free Quote →</a>
+    <a href="{% url 'website:contact' %}" class="btn btn-primary"
+      >Get a Free Quote →</a
+    >
   </div>
 </section>
 
