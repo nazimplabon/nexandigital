@@ -34,10 +34,16 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = [
     "nexandigital.com",
     "www.nexandigital.com",
-    "nexandigital.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://nexandigital.com",
+    "https://www.nexandigital.com",
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -93,10 +99,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('nexandigital_db'),
-        'USER': os.environ.get('nexandigital'),
-        'PASSWORD': os.environ.get('Mimi123@'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST', 'postgresql'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
@@ -155,3 +161,4 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+

@@ -1,0 +1,26 @@
+services:
+  nexandigital:
+    build: .
+    container_name: nexandigital
+    restart: unless-stopped
+    env_file:
+      - .env
+
+    networks:
+      - postgresql-ud8b_default
+
+    ports:
+      - "8000:8000"
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nexandigital.rule=Host(`nexandigital.com`) || Host(`www.nexandigital.com`)
+      - traefik.http.routers.nexandigital.entrypoints=websecure
+      - traefik.http.routers.nexandigital.tls=true
+      - traefik.http.routers.nexandigital.tls.certresolver=letsencrypt
+      - traefik.http.services.nexandigital.loadbalancer.server.port=8000
+      - traefik.http.services.nexandigital.loadbalancer.server.scheme=http
+
+networks:
+  postgresql-ud8b_default:
+    external: true
